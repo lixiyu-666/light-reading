@@ -12,7 +12,7 @@ spring:
       driver-class-name: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://localhost:3306/reading_cloud_resource?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
       username: root
-      password: 'pass123'
+      password: 'lixiyu9898998'
       initial-size: 5
       min-idle: 5
       max-active: 30
@@ -25,7 +25,7 @@ spring:
 es:
   indexType: book
   aliasName: books
-  servers: http://47.104.241.41:9200
+  servers: http://192.168.139.200:9200
 
 eureka:
   client:
