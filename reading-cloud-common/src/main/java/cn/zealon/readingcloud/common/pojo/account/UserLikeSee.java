@@ -1,6 +1,5 @@
 package cn.zealon.readingcloud.common.pojo.account;
 
-import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,10 +8,9 @@ import java.util.Date;
  * @author: zealon
  * @since: 2020/4/14
  */
-@Data
 public class UserLikeSee implements Serializable {
 
-    private static final Long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     private Integer id;
 
@@ -31,4 +29,35 @@ public class UserLikeSee implements Serializable {
      */
     private Date createTime;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 }

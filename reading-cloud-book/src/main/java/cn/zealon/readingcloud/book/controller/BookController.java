@@ -1,14 +1,14 @@
 package cn.zealon.readingcloud.book.controller;
 
+import cn.zealon.readingcloud.book.dto.BookQuery;
 import cn.zealon.readingcloud.book.service.BookService;
 import cn.zealon.readingcloud.book.vo.BookVO;
 import cn.zealon.readingcloud.common.pojo.book.Book;
 import cn.zealon.readingcloud.common.result.Result;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 图书接口
@@ -24,22 +24,25 @@ public class BookController {
     private BookService bookService;
 
     @ApiOperation(value = "查询图书基本信息" , httpMethod = "GET")
-    @ApiImplicitParams({
-        @ApiImplicitParam(paramType = "query", name = "bookId", value = "图书ID", dataType = "String")
-    })
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = Book.class)})
-    @GetMapping("/getBookById")
-    public Result<Book> getBookById(String bookId){
+    @GetMapping("/{bookId}")
+    public Result<Book> getBookById(@PathVariable String bookId){
+
         return bookService.getBookById(bookId);
     }
 
     @ApiOperation(value = "获取图书详情" , httpMethod = "GET")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "bookId", value = "图书ID", dataType = "String")
-    })
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = Book.class)})
     @GetMapping("/details")
-    public Result<BookVO> getBookDetails(String bookId){
+    public Result<BookVO> getBookDetails(@RequestParam String bookId){
+
         return bookService.getBookDetails(bookId);
+    }
+
+    /**
+     * 分页查询图书列表
+     */
+    @ApiOperation(value = "分页查询图书列表", httpMethod = "GET")
+    @GetMapping("/page")
+    public Result<IPage<Book>> getBookPage(BookQuery query) {
+        return bookService.getBookPage(query);
     }
 }

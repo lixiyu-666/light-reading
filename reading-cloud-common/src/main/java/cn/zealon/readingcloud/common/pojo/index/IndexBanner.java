@@ -1,6 +1,5 @@
 package cn.zealon.readingcloud.common.pojo.index;
 
-import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,10 +8,9 @@ import java.util.Date;
  * @author: zealon
  * @since: 2020/4/6
  */
-@Data
 public class IndexBanner implements Serializable {
 
-    private static final Long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     private Integer id;
 
@@ -40,4 +38,52 @@ public class IndexBanner implements Serializable {
      * 更新者
      */
     private String updater;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCreater() {
+        return creater;
+    }
+
+    public void setCreater(String creater) {
+        this.creater = creater;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
 }

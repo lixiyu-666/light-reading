@@ -1,7 +1,10 @@
 package cn.zealon.readingcloud.book.service;
 
+import cn.zealon.readingcloud.book.dto.BookQuery;
 import cn.zealon.readingcloud.book.vo.BookVO;
+import cn.zealon.readingcloud.common.pojo.book.Book;
 import cn.zealon.readingcloud.common.result.Result;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 
 /**
  * 图书服务
@@ -23,4 +26,11 @@ public interface BookService {
      * @return
      */
     Result<BookVO> getBookDetails(String bookId);
+
+    /**
+     * 分页查询图书列表
+     * @param query
+     * @return
+     */
+    Result<IPage<Book>> getBookPage(BookQuery query);
 }

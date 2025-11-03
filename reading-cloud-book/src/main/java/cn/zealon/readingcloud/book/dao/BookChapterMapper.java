@@ -24,10 +24,6 @@ public interface BookChapterMapper {
      * @param currentSortNumber
      * @return
      */
-    @Select("select id from book_chapter  " +
-            " where book_id=#{bookId} " +
-            " and sort_number < #{currentSortNumber} " +
-            " order by sort_number desc limit 1")
     Integer selectPreChapterId(@Param("bookId") Integer bookId,
                                @Param("currentSortNumber") Integer currentSortNumber);
 
@@ -37,10 +33,6 @@ public interface BookChapterMapper {
      * @param currentSortNumber
      * @return
      */
-    @Select("select id from book_chapter  " +
-            " where book_id=#{bookId} " +
-            " and sort_number > #{currentSortNumber} " +
-            " order by sort_number asc limit 1")
     Integer selectNextChapterId(@Param("bookId") Integer bookId,
                                 @Param("currentSortNumber") Integer currentSortNumber);
 

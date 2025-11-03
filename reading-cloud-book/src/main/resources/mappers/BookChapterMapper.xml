@@ -56,4 +56,18 @@
         <include refid="findPageWithWhere" />
     </select>
 
+    <select id="selectPreChapterId" resultType="java.lang.Integer">
+        select id from book_chapter
+        where book_id = #{bookId}
+          and sort_number &lt; #{currentSortNumber}
+        order by sort_number desc limit 1
+    </select>
+
+    <select id="selectNextChapterId" resultType="java.lang.Integer">
+        select id from book_chapter
+        where book_id = #{bookId}
+          and sort_number &gt; #{currentSortNumber}
+        order by sort_number asc limit 1
+    </select>
+
 </mapper>

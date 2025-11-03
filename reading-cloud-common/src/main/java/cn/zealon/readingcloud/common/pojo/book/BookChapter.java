@@ -1,7 +1,5 @@
 package cn.zealon.readingcloud.common.pojo.book;
 
-import lombok.Data;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -10,10 +8,9 @@ import java.util.Date;
  * @author: zealon
  * @since: 2020/3/18
  */
-@Data
 public class BookChapter implements Serializable {
 
-    private static final Long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     /** 主键ID */
     protected Integer id;
@@ -46,4 +43,68 @@ public class BookChapter implements Serializable {
     private Date createTime;
 
     private Date updateTime;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(Integer bookId) {
+        this.bookId = bookId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Boolean getLockStatus() {
+        return lockStatus;
+    }
+
+    public void setLockStatus(Boolean lockStatus) {
+        this.lockStatus = lockStatus;
+    }
+
+    public Integer getSortNumber() {
+        return sortNumber;
+    }
+
+    public void setSortNumber(Integer sortNumber) {
+        this.sortNumber = sortNumber;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 }

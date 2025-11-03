@@ -1,6 +1,5 @@
 package cn.zealon.readingcloud.common.pojo.index;
 
-import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,10 +8,9 @@ import java.util.Date;
  * @author: zealon
  * @since: 2020/4/6
  */
-@Data
 public class IndexBooklistItem implements Serializable {
 
-    private static final Long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     private Integer id;
 
@@ -51,4 +49,67 @@ public class IndexBooklistItem implements Serializable {
      */
     private String updater;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getBooklistId() {
+        return booklistId;
+    }
+
+    public void setBooklistId(Integer booklistId) {
+        this.booklistId = booklistId;
+    }
+
+    public String getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
+    }
+
+    public Integer getSortNumber() {
+        return sortNumber;
+    }
+
+    public void setSortNumber(Integer sortNumber) {
+        this.sortNumber = sortNumber;
+    }
+
+    public String getCreater() {
+        return creater;
+    }
+
+    public void setCreater(String creater) {
+        this.creater = creater;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
 }

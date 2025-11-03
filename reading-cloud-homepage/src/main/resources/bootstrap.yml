@@ -11,9 +11,9 @@ spring:
         file-extension: yml
         refresh: true
         shared-dataids: light-reading-cloud-homepage.yml
-        namespace: 4d109a4d-f34d-4e86-9e39-c2d36db24b00
+        #namespace: 4d109a4d-f34d-4e86-9e39-c2d36db24b00
 
       # 注册中心
       discovery:
         server-addr: 192.168.139.200:8848
-        namespace: 4d109a4d-f34d-4e86-9e39-c2d36db24b00
+        #namespace: 4d109a4d-f34d-4e86-9e39-c2d36db24b00

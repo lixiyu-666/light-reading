@@ -1,5 +1,6 @@
 package cn.zealon.readingcloud.common.cache;
 
+import cn.zealon.readingcloud.common.pojo.book.Book;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -513,6 +514,9 @@ public class RedisService {
         }
         long end = pageNo * pageSize - 1;
         return zSetRange(key,start,end,c);
+    }
+
+    public void setCache(String key, Book book, long hour) {
     }
     /************************************** zSet处理 End */
 }

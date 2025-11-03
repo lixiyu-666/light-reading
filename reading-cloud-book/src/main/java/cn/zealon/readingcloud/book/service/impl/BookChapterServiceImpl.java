@@ -52,9 +52,9 @@ public class BookChapterServiceImpl implements BookChapterService {
 
         String key = RedisBookKey.getBookChapterListKey(bookId);
         List<BookChapterListVO> chapterVOs = this.redisService.getCacheForList(key, BookChapter.class);
-        if (null == chapterVOs || chapterVOs.size() == 0) {
+        if (null == chapterVOs || chapterVOs.isEmpty()) {
             List<BookChapter> chapters = this.bookChapterMapper.findPageWithResult(book.getId());
-            if (chapters.size() > 0) {
+            if (!chapters.isEmpty()) {
                 chapterVOs = new ArrayList<>();
                 for (int i = 0; i < chapters.size(); i++) {
                     BookChapterListVO vo = new BookChapterListVO();
@@ -76,7 +76,9 @@ public class BookChapterServiceImpl implements BookChapterService {
         if (chapter == null) {
             chapter = this.bookChapterMapper.selectById(chapterId);
             if (chapter != null) {
-                this.redisService.setHashValExpire(key, field ,chapter, RedisExpire.HOUR);
+                this.redisService.setHashValExpire(key, field, chapter, RedisExpire.HOUR);
+            } else {
+                return ResultUtil.notFound().buildMessage("章节不存在！");
             }
         }
         return ResultUtil.success(chapter);
@@ -96,6 +98,7 @@ public class BookChapterServiceImpl implements BookChapterService {
         } else if (chapterId == -1) {
             field = "last";
         }
+
         BookPreviousAndNextChapterNode chapterNode = this.getChapterNodeData(book.getId(), field);
         if (chapterNode == null) {
             // 获取不到节点数据查询首章节
@@ -108,7 +111,11 @@ public class BookChapterServiceImpl implements BookChapterService {
 
         // 获取当前章信息、内容
         String content = this.getChapterContent(bookId, chapterNode.getId());
-        BookChapterVO current = new BookChapterVO(chapterNode.getId(),chapterNode.getName(),content);
+        if (content == null) {
+            return ResultUtil.notFound().buildMessage("章节内容不存在！");
+        }
+
+        BookChapterVO current = new BookChapterVO(chapterNode.getId(), chapterNode.getName(), content);
 
         // 上一章、下一章
         BookChapterVO pre = null;
@@ -128,11 +135,11 @@ public class BookChapterServiceImpl implements BookChapterService {
 
     /**
      * 获取前后章节节点数据链表
-     * @param bookId
-     * @param field
-     * @return
+     * @param bookId 图书ID
+     * @param field 字段标识
+     * @return 章节节点数据
      */
-    private BookPreviousAndNextChapterNode getChapterNodeData(final Integer bookId, final String field){
+    private BookPreviousAndNextChapterNode getChapterNodeData(final Integer bookId, final String field) {
         // 缓存获取
         String key = RedisBookKey.getBookChapterNodeKey(bookId);
         BookPreviousAndNextChapterNode chapterNode = this.redisService.getHashObject(key, field, BookPreviousAndNextChapterNode.class);
@@ -142,68 +149,73 @@ public class BookChapterServiceImpl implements BookChapterService {
 
         // 章节列表
         List<BookChapter> chapterList = this.bookChapterMapper.findPageWithResult(bookId);
-        if (chapterList.size() == 0) {
+        if (chapterList.isEmpty()) {
             return null;
         }
 
-        HashMap<String,BookPreviousAndNextChapterNode> map = new HashMap<>();
-        // 上一章节节点数据
+        HashMap<String, BookPreviousAndNextChapterNode> map = new HashMap<>();
         BookPreviousAndNextChapterNode pre = null;
-        try {
-            for (int i = 1; i <= chapterList.size(); i++) {
-                BookChapter chapter = chapterList.get(i - 1);
-                // 锁章，获取下一章内容
-                if (chapter.getLockStatus()) {
-                    if (i >= chapterList.size()) {
-                        break;
-                    }
-                    chapter = chapterList.get(i);
-                }
 
-                // 得到当前章节节点数据
+        try {
+            List<BookChapter> availableChapters = new ArrayList<>();
+
+            // 过滤掉锁定的章节
+            for (BookChapter chapter : chapterList) {
+                if (!chapter.getLockStatus()) {
+                    availableChapters.add(chapter);
+                }
+            }
+
+            if (availableChapters.isEmpty()) {
+                return null;
+            }
+
+            // 构建链表
+            for (int i = 0; i < availableChapters.size(); i++) {
+                BookChapter chapter = availableChapters.get(i);
                 BookPreviousAndNextChapterNode curr = new BookPreviousAndNextChapterNode(chapter.getId(), chapter.getName());
+
                 if (pre != null) {
                     curr.setPre(new BookPreviousAndNextChapterNode(pre));
                     pre.setNext(new BookPreviousAndNextChapterNode(curr));
-                    // 章节id
-                    map.put(pre.getId()+"", pre);
+                    map.put(pre.getId().toString(), pre);
                 }
 
-                // 第二章设置前章节点数据
-                if (i == 2) {
-                    map.put("first", pre);
-                }
-
-                // 首章节设置当前节点数据
-                if (i == 1) {
+                // 首章节
+                if (i == 0) {
                     map.put("first", curr);
                 }
 
                 // 存储节点数据
-                map.put(curr.getId()+"", curr);
+                map.put(curr.getId().toString(), curr);
                 pre = curr;
+
+                // 最后一章节
+                if (i == availableChapters.size() - 1) {
+                    map.put("last", curr);
+                }
             }
-            // 最后一章节
-            map.put("last", pre);
+
             this.redisService.setHashValsExpire(key, map, RedisExpire.HOUR_FOUR);
         } catch (Exception e) {
-            LOGGER.error("生成章节节点数据异常：{}", e);
+            LOGGER.error("生成章节节点数据异常：{}", e.getMessage(), e);
         }
+
         return map.get(field);
     }
 
     /**
      * 获取章节内容
-     * @param bookId
-     * @param chapterId
-     * @return
+     * @param bookId 图书ID
+     * @param chapterId 章节ID
+     * @return 章节内容
      */
-    private String getChapterContent(String bookId, Integer chapterId){
-        String content = "";
-        BookChapter chapter = this.getChapterById(bookId, chapterId).getData();
-        if (chapter != null) {
-            content = chapter.getContent();
+    private String getChapterContent(String bookId, Integer chapterId) {
+        Result<BookChapter> chapterResult = this.getChapterById(bookId, chapterId);
+        // 检查Result的code来判断是否成功，通常200表示成功
+        if (chapterResult.getCode() == 200 && chapterResult.getData() != null) {
+            return chapterResult.getData().getContent();
         }
-        return content;
+        return null;
     }
 }

@@ -1,6 +1,5 @@
 package cn.zealon.readingcloud.common.pojo.account;
 
-import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,10 +8,9 @@ import java.util.Date;
  * @author: zealon
  * @since: 2020/4/10
  */
-@Data
 public class UserBookshelf implements Serializable {
 
-    private static final Long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     private Integer id;
 
@@ -40,4 +38,52 @@ public class UserBookshelf implements Serializable {
      * 创建时间
      */
     private Date createTime;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
+    }
+
+    public Integer getLastChapterId() {
+        return lastChapterId;
+    }
+
+    public void setLastChapterId(Integer lastChapterId) {
+        this.lastChapterId = lastChapterId;
+    }
+
+    public Long getLastReadTime() {
+        return lastReadTime;
+    }
+
+    public void setLastReadTime(Long lastReadTime) {
+        this.lastReadTime = lastReadTime;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 }
