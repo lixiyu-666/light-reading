@@ -26,6 +26,7 @@ public class UserController {
     @ApiResponses({@ApiResponse(code = 200, message = "", response = Result.class)})
     @PostMapping("/register")
     public Result register(@RequestBody UserBO userBO) {
+
         return this.userService.register(userBO);
     }
 

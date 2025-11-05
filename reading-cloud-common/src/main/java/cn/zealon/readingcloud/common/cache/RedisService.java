@@ -116,26 +116,27 @@ public class RedisService {
      * @param time 缓存时间
      */
     public void setExpire(final String key, Long time) {
+
         stringRedisTemplate.expire(key, time, TimeUnit.SECONDS);
     }
 
     /**
      * 获取缓存时间剩余时间
-     *
      * @param key 缓存key
      * @return long 缓存剩余时间
      */
     public Long getExpire(final String key) {
+
         return stringRedisTemplate.getExpire(key, TimeUnit.SECONDS);
     }
 
     /**
      * 判断key是否存在
-     *
      * @param key 缓存key
      * @return boolean 成功失败
      */
     public Boolean hasKey(String key) {
+
         return stringRedisTemplate.hasKey(key);
     }
     /************************************** 公共方法 End */
@@ -161,7 +162,6 @@ public class RedisService {
 
     /**
      * 从缓存中获取
-     *
      * @param key     缓存key
      * @param typeOff 对象类型
      * @return Object 返回实体
@@ -172,7 +172,6 @@ public class RedisService {
 
     /**
      * 获取缓存信息
-     *
      * @param key 缓存key
      * @return String
      */
@@ -182,7 +181,6 @@ public class RedisService {
 
     /**
      * 设置缓存值没有设置过期时间
-     *
      * @param key   缓存key
      * @param value 缓存值
      */
@@ -195,7 +193,6 @@ public class RedisService {
 
     /**
      * 设置缓存过期时间
-     *
      * @param key   缓存KEY
      * @param value 缓存值
      */
@@ -208,7 +205,6 @@ public class RedisService {
 
     /**
      * 设置缓存过期时间
-     *
      * @param key   缓存KEY
      * @param value 缓存值
      * @param time  缓存时间
@@ -224,7 +220,6 @@ public class RedisService {
     /************************************** Object处理 */
     /**
      * 添加缓存
-     *
      * @param key 缓存KEY
      * @param obj 缓存对象
      */
@@ -234,7 +229,6 @@ public class RedisService {
 
     /**
      * 设置缓存并添加默认过期时间
-     *
      * @param key 缓存KEY
      * @param obj 添加的缓存对象
      */
@@ -247,7 +241,6 @@ public class RedisService {
 
     /**
      * 设置缓存并添加缓存过期时间
-     *
      * @param key  缓存KEY
      * @param obj  缓存对象
      * @param time 缓存时间
@@ -263,7 +256,6 @@ public class RedisService {
     /************************************** List处理  */
     /**
      * 添加缓存
-     *
      * @param key  缓存KEY
      * @param list 缓存列表值
      */
@@ -284,7 +276,6 @@ public class RedisService {
 
     /**
      * 添加缓存并设置过期时间 有默认值
-     *
      * @param key  缓存KEY
      * @param list 缓存列表值
      */
@@ -299,7 +290,6 @@ public class RedisService {
 
     /**
      * 添加缓存并设置过期时间
-     *
      * @param key  缓存KEY
      * @param list 缓存列表
      * @param time 缓存时间
@@ -311,7 +301,6 @@ public class RedisService {
 
     /**
      * 添加缓存
-     *
      * @param key  缓存KEY
      * @param list 缓存列表
      */
@@ -332,7 +321,6 @@ public class RedisService {
 
     /**
      * 添加缓存并设置过期时间 有默认值
-     *
      * @param key  缓存KEY
      * @param list 缓存列表
      */
@@ -347,7 +335,6 @@ public class RedisService {
 
     /**
      * 添加缓存并设置过期时间
-     *
      * @param key  缓存KEY
      * @param list 缓存列表
      * @param time 缓存时间
@@ -359,7 +346,6 @@ public class RedisService {
 
     /**
      * 从缓存获取数据
-     *
      * @param key 缓存KEY
      * @param c   值类型
      * @param <T> 值对象
